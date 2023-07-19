@@ -55,12 +55,12 @@ public class CameraClient implements ICameraClient {
 	protected final Object mServiceSync = new Object();
 	protected IUVCService mService;
 	protected ICameraClientCallback mListener;
-	private final ArrayList<PointF> points;
+//	private final ArrayList<PointF> points;
 
-	public CameraClient(final Context context, ArrayList<PointF> points, String packageName, final ICameraClientCallback listener) {
+	public CameraClient(final Context context, String packageName, final ICameraClientCallback listener) {
 		if (DEBUG) Log.v(TAG, "Constructor:");
 		mWeakContext = new WeakReference<Context>(context);
-		this.points = points;
+//		this.points = points;
 		mListener = listener;
 		mWeakHandler = new WeakReference<CameraHandler>(CameraHandler.createHandler(this));
 		doBindService(packageName);
@@ -183,14 +183,14 @@ public class CameraClient implements ICameraClient {
 	}
 
 	protected boolean doBindService(String packageName) {
-		if (DEBUG) Log.v(TAG, "doBindService:");
+		if (DEBUG) Log.v(TAG, "doBindService: " + packageName);
 		synchronized (mServiceSync) {
 			if (mService == null) {
 				final Context context = mWeakContext.get();
 				if (context != null) {
 					final Intent intent = new Intent(IUVCService.class.getName());
 					intent.setPackage(packageName);
-					intent.putParcelableArrayListExtra(UVCService.EXTRA_POINTS, points);
+//					intent.putParcelableArrayListExtra(UVCService.EXTRA_POINTS, points);
 					context.bindService(intent,
 						mServiceConnection, Context.BIND_AUTO_CREATE);
 				} else

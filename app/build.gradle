@@ -30,11 +30,17 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
 
     implementation project(':usbcamera')
+    implementation 'pub.devrel:easypermissions:3.0.0'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

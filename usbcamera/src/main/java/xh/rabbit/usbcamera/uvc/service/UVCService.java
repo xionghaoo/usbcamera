@@ -59,13 +59,13 @@ import xh.rabbit.usbcamera.R;
 public class UVCService extends BaseService {
 	private static final boolean DEBUG = true;
 	private static final String TAG = "UVCService";
-	private static final int NOTIFICATION = 1;
-	public static final String EXTRA_POINTS = "com.ubt.robocontroller.UVCService.EXTRA_POINTS";
-	public static final String EXTRA_BOOT_CMD = "com.ubt.robocontroller.UVCService.EXTRA_BOOT_CMD";
+	private static final int NOTIFICATION = 100;
+	public static final String EXTRA_POINTS = "xh.rabbit.usbcamera.UVCService.EXTRA_POINTS";
+	public static final String EXTRA_BOOT_CMD = "xh.rabbit.usbcamera.UVCService.EXTRA_BOOT_CMD";
 
 	private USBMonitor mUSBMonitor;
 	private NotificationManager mNotificationManager;
-	private ArrayList<PointF> points;
+//	private ArrayList<PointF> points;
 	private Boolean isBoot = false;
 
 
@@ -116,8 +116,7 @@ public class UVCService extends BaseService {
 	@Override
 	public IBinder onBind(final Intent intent) {
 		if (DEBUG) Log.d(TAG, "onBind:" + intent);
-
-		points = intent.getParcelableArrayListExtra(EXTRA_POINTS);
+//		points = intent.getParcelableArrayListExtra(EXTRA_POINTS);
 
 		final String action = intent != null ? intent.getAction() : null;
 		if (IUVCService.class.getName().equals(action)) {
@@ -158,7 +157,7 @@ public class UVCService extends BaseService {
 //		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, FLAG_IMMUTABLE);
         // Set the info for the views that show in the notification panel.
         final Notification notification = new NotificationCompat.Builder(this, "uvc_camera_channel")
-			.setSmallIcon(R.drawable.ic_launcher_round)  // the status icon
+			.setSmallIcon(R.drawable.ic_camera)  // the status icon
 			.setTicker(text)  // the status text
 			.setWhen(System.currentTimeMillis())  // the time stamp
 			.setContentTitle("USB CAMERA")  // the label of the entry
@@ -208,8 +207,8 @@ public class UVCService extends BaseService {
 									UVCService.this,
 									ctrlBlock,
 									device.getVendorId(),
-									device.getProductId(),
-									points
+									device.getProductId()
+//									points
 							);
 							sCameraServers.append(key, service);
 						} else {

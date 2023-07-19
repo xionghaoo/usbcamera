@@ -97,11 +97,10 @@ public final class CameraServer extends Handler {
 			final Context context,
 			final UsbControlBlock ctrlBlock,
 			final int vid,
-			final int pid,
-			ArrayList<PointF> points
+			final int pid
 	) {
 		if (DEBUG) Log.d(TAG, "createServer:");
-		final CameraThread thread = new CameraThread(context, ctrlBlock, points);
+		final CameraThread thread = new CameraThread(context, ctrlBlock);
 		thread.start();
 		return thread.getHandler();
 	}
@@ -469,7 +468,7 @@ public final class CameraServer extends Handler {
 		private int runMode = 1;
 		private int markerMaxIndex = 0;
 
-		private CameraThread(final Context context, final UsbControlBlock ctrlBlock, ArrayList<PointF> pointArr) {
+		private CameraThread(final Context context, final UsbControlBlock ctrlBlock) {
 			super("CameraThread");
 			if (DEBUG) Log.d(TAG_THREAD, "Constructor:");
 			mWeakContext = new WeakReference<Context>(context);

@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+    <uses-feature android:name="android.hardware.usb.host"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
+    <application>
+        <service
+            android:name=".uvc.service.UVCService"
+            android:exported="true"
+            android:process=":uvcservice">
+            <intent-filter>
+                <action android:name="xh.rabbit.usbcamera.IUVCService" />
+                <action android:name="xh.rabbit.usbcamera.IUVCSlaveService" />
+            </intent-filter>
+        </service>
+    </application>
 </manifest>

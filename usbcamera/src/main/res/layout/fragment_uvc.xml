@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".uvc.UvcFragment">
+    tools:context=".uvc.UVCFragment">
 
     <com.serenegiant.widget.UVCCameraTextureView
         android:id="@+id/camera_view"

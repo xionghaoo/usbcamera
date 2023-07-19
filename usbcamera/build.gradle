@@ -36,10 +36,10 @@ android {
 
 dependencies {
 
-    implementation project(":usbCameraCommon")
-    implementation project(":libuvccamera")
+    api project(":usbCameraCommon")
+    api project(":libuvccamera")
     def commonLibVersion = "2.12.4"
-    implementation("com.serenegiant:common:${commonLibVersion}") {
+    api("com.serenegiant:common:${commonLibVersion}") {
         exclude module: 'support-v4'
     }
     implementation "com.google.code.gson:gson:2.8.6"

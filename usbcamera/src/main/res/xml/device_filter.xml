@@ -26,8 +26,9 @@
 <usb>
 	<!-- 100W测试相机 -->
 <!--	<usb-device vendor-id="2981" product-id="27648"/>-->
+	<usb-device vendor-id="7749" product-id="32802"/>
 	<!-- 红外相机 -->
-	<usb-device vendor-id="1443" product-id="37424"/>
+<!--	<usb-device vendor-id="1443" product-id="37424"/>-->
 	<!-- 全部 -->
 <!--	<usb-device class="239" subclass="2"/>	&lt;!&ndash; all device of UVC &ndash;&gt;-->
 </usb>
