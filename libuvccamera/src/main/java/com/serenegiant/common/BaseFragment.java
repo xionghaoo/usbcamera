@@ -25,13 +25,13 @@ package com.serenegiant.common;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.widget.Toast;
@@ -280,63 +280,63 @@ public class BaseFragment extends Fragment
 	protected static final int REQUEST_PERMISSION_NETWORK = 0x345678;
 	protected static final int REQUEST_PERMISSION_CAMERA = 0x537642;
 
-	/**
-	 * 外部ストレージへの書き込みパーミッションが有るかどうかをチェック
-	 * なければ説明ダイアログを表示する
-	 * @return true 外部ストレージへの書き込みパーミッションが有る
-	 */
-	protected boolean checkPermissionWriteExternalStorage() {
-		if (!PermissionCheck.hasWriteExternalStorage(getActivity())) {
-			MessageDialogFragment.showDialog(this, REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
-				com.serenegiant.common.R.string.permission_title, com.serenegiant.common.R.string.permission_ext_storage_request,
-				new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE});
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * 録音のパーミッションが有るかどうかをチェック
-	 * なければ説明ダイアログを表示する
-	 * @return true 録音のパーミッションが有る
-	 */
-	protected boolean checkPermissionAudio() {
-		if (!PermissionCheck.hasAudio(getActivity())) {
-			MessageDialogFragment.showDialog(this, REQUEST_PERMISSION_AUDIO_RECORDING,
-				com.serenegiant.common.R.string.permission_title, com.serenegiant.common.R.string.permission_audio_recording_request,
-				new String[]{Manifest.permission.RECORD_AUDIO});
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * ネットワークアクセスのパーミッションが有るかどうかをチェック
-	 * なければ説明ダイアログを表示する
-	 * @return true ネットワークアクセスのパーミッションが有る
-	 */
-	protected boolean checkPermissionNetwork() {
-		if (!PermissionCheck.hasNetwork(getActivity())) {
-			MessageDialogFragment.showDialog(this, REQUEST_PERMISSION_NETWORK,
-				com.serenegiant.common.R.string.permission_title, com.serenegiant.common.R.string.permission_network_request,
-				new String[]{Manifest.permission.INTERNET});
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * カメラアクセスのパーミッションがあるかどうかをチェック
-	 * なければ説明ダイアログを表示する
-	 * @return true カメラアクセスのパーミッションが有る
-	 */
-	protected boolean checkPermissionCamera() {
-		if (!PermissionCheck.hasCamera(getActivity())) {
-			MessageDialogFragment.showDialog(this, REQUEST_PERMISSION_CAMERA,
-				com.serenegiant.common.R.string.permission_title, com.serenegiant.common.R.string.permission_camera_request,
-				new String[]{Manifest.permission.CAMERA});
-			return false;
-		}
-		return true;
-	}
+//	/**
+//	 * 外部ストレージへの書き込みパーミッションが有るかどうかをチェック
+//	 * なければ説明ダイアログを表示する
+//	 * @return true 外部ストレージへの書き込みパーミッションが有る
+//	 */
+//	protected boolean checkPermissionWriteExternalStorage() {
+//		if (!PermissionCheck.hasWriteExternalStorage(getActivity())) {
+//			MessageDialogFragment.showDialog(this, REQUEST_PERMISSION_WRITE_EXTERNAL_STORAGE,
+//				com.serenegiant.common.R.string.permission_title, com.serenegiant.common.R.string.permission_ext_storage_request,
+//				new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE});
+//			return false;
+//		}
+//		return true;
+//	}
+//
+//	/**
+//	 * 録音のパーミッションが有るかどうかをチェック
+//	 * なければ説明ダイアログを表示する
+//	 * @return true 録音のパーミッションが有る
+//	 */
+//	protected boolean checkPermissionAudio() {
+//		if (!PermissionCheck.hasAudio(getActivity())) {
+//			MessageDialogFragment.showDialog(this, REQUEST_PERMISSION_AUDIO_RECORDING,
+//				com.serenegiant.common.R.string.permission_title, com.serenegiant.common.R.string.permission_audio_recording_request,
+//				new String[]{Manifest.permission.RECORD_AUDIO});
+//			return false;
+//		}
+//		return true;
+//	}
+//
+//	/**
+//	 * ネットワークアクセスのパーミッションが有るかどうかをチェック
+//	 * なければ説明ダイアログを表示する
+//	 * @return true ネットワークアクセスのパーミッションが有る
+//	 */
+//	protected boolean checkPermissionNetwork() {
+//		if (!PermissionCheck.hasNetwork(getActivity())) {
+//			MessageDialogFragment.showDialog(this, REQUEST_PERMISSION_NETWORK,
+//				com.serenegiant.common.R.string.permission_title, com.serenegiant.common.R.string.permission_network_request,
+//				new String[]{Manifest.permission.INTERNET});
+//			return false;
+//		}
+//		return true;
+//	}
+//
+//	/**
+//	 * カメラアクセスのパーミッションがあるかどうかをチェック
+//	 * なければ説明ダイアログを表示する
+//	 * @return true カメラアクセスのパーミッションが有る
+//	 */
+//	protected boolean checkPermissionCamera() {
+//		if (!PermissionCheck.hasCamera(getActivity())) {
+//			MessageDialogFragment.showDialog(this, REQUEST_PERMISSION_CAMERA,
+//				com.serenegiant.common.R.string.permission_title, com.serenegiant.common.R.string.permission_camera_request,
+//				new String[]{Manifest.permission.CAMERA});
+//			return false;
+//		}
+//		return true;
+//	}
 }

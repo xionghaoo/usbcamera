@@ -23,7 +23,7 @@ import xh.rabbit.usbcamera.UsbCameraManager
 import xh.rabbit.usbcamera.uvc.UVCFragment
 import xh.rabbit.usbcameralib.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UVCFragment.OnFragmentActionListener {
 
     companion object {
         private const val ACTION_USB_PERMISSION = "com.ubt.robocontroller.USB_PERMISSION"
@@ -143,7 +143,6 @@ class MainActivity : AppCompatActivity() {
                             afterGetUsbPermission(usbDevice)
                         }
                     } else {
-//                        Toast.makeText(this@UVCActivity, "Usb权限未授予", Toast.LENGTH_SHORT).show()
                         requestUsbPermission()
                     }
                 }
@@ -154,9 +153,17 @@ class MainActivity : AppCompatActivity() {
     private fun afterGetUsbPermission(usbDevice: UsbDevice) {
         Timber.d("afterGetUsbPermission: ${usbDevice.deviceId}")
         fragment = UVCFragment.newInstance(usbDevice.productId, "xh.rabbit.usbcameralib")
-        fragmentManager.beginTransaction()
+        supportFragmentManager.beginTransaction()
             .add(R.id.camera_fragment_container, fragment)
             .commit()
+
+    }
+
+    override fun onMarking(index: Int, code: Int) {
+
+    }
+
+    override fun onFpsChange(fps: Int, fpsHandle: Int) {
 
     }
 }

@@ -305,7 +305,7 @@ public final class CameraServer extends Handler {
 		mCallbacks.finishBroadcast();
 	}
 
-	private void processOnMarking(int index, int code) {
+	private void processOnRecognize(int index, int code) {
 		final int n = mCallbacks.beginBroadcast();
 		for (int i = 0; i < n; i++) {
 			if (((CallbackCookie)mCallbacks.getBroadcastCookie(i)).isConnected) {
@@ -855,43 +855,45 @@ public final class CameraServer extends Handler {
 			public void onPrepared(final MediaEncoder encoder) {
 				if (DEBUG) Log.d(TAG, "onPrepared:encoder=" + encoder);
 				mIsRecording = true;
-				if (encoder instanceof MediaSurfaceEncoder)
-				try {
-					mVideoEncoder = (MediaSurfaceEncoder)encoder;
-					final Surface encoderSurface = mVideoEncoder.getInputSurface();
-					mEncoderSurfaceId = encoderSurface.hashCode();
-					mHandler.mRendererHolder.addSurface(mEncoderSurfaceId, encoderSurface, true);
-				} catch (final Exception e) {
-					Log.e(TAG, "onPrepared:", e);
+				if (encoder instanceof MediaSurfaceEncoder) {
+					try {
+						mVideoEncoder = (MediaSurfaceEncoder)encoder;
+						final Surface encoderSurface = mVideoEncoder.getInputSurface();
+						mEncoderSurfaceId = encoderSurface.hashCode();
+						mHandler.mRendererHolder.addSurface(mEncoderSurfaceId, encoderSurface, true);
+					} catch (final Exception e) {
+						Log.e(TAG, "onPrepared:", e);
+					}
 				}
 			}
 
 			@Override
 			public void onStopped(final MediaEncoder encoder) {
 				if (DEBUG) Log.v(TAG_THREAD, "onStopped:encoder=" + encoder);
-				if ((encoder instanceof MediaSurfaceEncoder))
-				try {
-					mIsRecording = false;
-					if (mEncoderSurfaceId > 0) {
-						try {
-							mHandler.mRendererHolder.removeSurface(mEncoderSurfaceId);
-						} catch (final Exception e) {
-							Log.w(TAG, e);
+				if ((encoder instanceof MediaSurfaceEncoder)) {
+					try {
+						mIsRecording = false;
+						if (mEncoderSurfaceId > 0) {
+							try {
+								mHandler.mRendererHolder.removeSurface(mEncoderSurfaceId);
+							} catch (final Exception e) {
+								Log.w(TAG, e);
+							}
 						}
-					}
-					mEncoderSurfaceId = -1;
-					synchronized (mSync) {
-						if (mUVCCamera != null) {
-							mUVCCamera.stopCapture();
+						mEncoderSurfaceId = -1;
+						synchronized (mSync) {
+							if (mUVCCamera != null) {
+								mUVCCamera.stopCapture();
+							}
 						}
+						mVideoEncoder = null;
+						final String path = encoder.getOutputPath();
+						if (!TextUtils.isEmpty(path)) {
+							mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_MEDIA_UPDATE, path), 1000);
+						}
+					} catch (final Exception e) {
+						Log.e(TAG, "onPrepared:", e);
 					}
-					mVideoEncoder = null;
-					final String path = encoder.getOutputPath();
-					if (!TextUtils.isEmpty(path)) {
-						mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_MEDIA_UPDATE, path), 1000);
-					}
-				} catch (final Exception e) {
-					Log.e(TAG, "onPrepared:", e);
 				}
 			}
 		};

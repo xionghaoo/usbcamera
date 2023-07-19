@@ -57,6 +57,7 @@ class UVCFragment : BaseFragment() {
                 createNew: Boolean
             ) {
                 Logger.d("onConnect")
+                //
             }
 
             override fun onDisconnect(device: UsbDevice, ctrlBlock: USBMonitor.UsbControlBlock) {
@@ -87,7 +88,7 @@ class UVCFragment : BaseFragment() {
             addSurfaceWithCheck()
             // start UVCService
             val intent = Intent(activity, UVCService::class.java)
-            activity.startService(intent)
+            activity?.startService(intent)
             activity?.runOnUiThread {
                 ToastUtil.show(context, "启动服务")
             }
@@ -107,7 +108,7 @@ class UVCFragment : BaseFragment() {
         }
     }
 
-    override fun onAttach(activity: Activity?) {
+    override fun onAttach(activity: Activity) {
         super.onAttach(activity)
         if (activity is OnFragmentActionListener) {
             listener = activity
@@ -123,7 +124,7 @@ class UVCFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         if (mUSBMonitor == null) {
-            mUSBMonitor = USBMonitor(activity.applicationContext, mOnDeviceConnectListener)
+            mUSBMonitor = USBMonitor(activity?.applicationContext, mOnDeviceConnectListener)
             val filters = DeviceFilter.getDeviceFilters(activity, R.xml.device_filter)
             mUSBMonitor?.setDeviceFilter(filters)
         }
@@ -137,9 +138,8 @@ class UVCFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.cameraView.aspectRatio = (UVCCamera.DEFAULT_PREVIEW_WIDTH / UVCCamera.DEFAULT_PREVIEW_HEIGHT.toFloat()).toDouble()
 
     }
@@ -161,7 +161,7 @@ class UVCFragment : BaseFragment() {
     }
 
     private fun updateCameraDialog(): Boolean {
-        val fragment = fragmentManager.findFragmentByTag("CameraDialog")
+        val fragment = childFragmentManager.findFragmentByTag("CameraDialog")
         if (fragment is CameraDialog) {
             fragment.updateDevices()
             return true
@@ -191,7 +191,7 @@ class UVCFragment : BaseFragment() {
     private fun openUVCCamera() {
         if (!mUSBMonitor!!.isRegistered) return
 //        val list = mUSBMonitor!!.deviceList
-        val usbManager = context.getSystemService(Context.USB_SERVICE) as UsbManager
+        val usbManager = context?.getSystemService(Context.USB_SERVICE) as UsbManager
         val list = usbManager.deviceList.values
         list.forEach { device ->
             if (device.productId == pid) {
@@ -227,7 +227,7 @@ class UVCFragment : BaseFragment() {
 
     fun stopService() {
         val intent = Intent(activity, UVCService::class.java)
-        activity.stopService(intent)
+        activity?.stopService(intent)
     }
 
     interface OnFragmentActionListener {
